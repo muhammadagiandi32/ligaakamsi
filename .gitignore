@@ -1,4 +1,9 @@
 node_modules
-dist
 .DS_Store
 *.local
+
+# Catatan: dist/ SENGAJA ikut di-commit.
+# Hostinger VPS API tidak menjalankan tahap `build:` dari docker-compose,
+# jadi VPS hanya meng-clone repo ini dan menyajikan isi dist/ apa adanya.
+# Konsekuensinya: setiap kali ubah konten, jalankan `npm run build`
+# lalu commit + push dist/, baru redeploy.
