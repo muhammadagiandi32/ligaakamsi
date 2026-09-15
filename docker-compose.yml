@@ -1,0 +1,13 @@
+# Mengikuti pola project lain di VPS ini (lihat: kolibrinektara):
+# container di-bind ke 127.0.0.1 saja, lalu nginx HOST yang jadi
+# reverse proxy + terminasi SSL untuk domainnya.
+services:
+  ligaakamsi-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ligaakamsi-web
+    restart: unless-stopped
+    ports:
+      # 3000 sudah dipakai kolibrinektara, 3001 kosong.
+      - "127.0.0.1:3001:80"

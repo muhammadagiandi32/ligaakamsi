@@ -1,0 +1,21 @@
+# Compose khusus untuk deploy lewat Hostinger VPS API.
+#
+# Bedanya dengan docker-compose.yml biasa: build context-nya menunjuk ke
+# URL git, bukan folder lokal. Hostinger hanya menarik FILE compose ini ke
+# VPS (bukan seluruh repo), jadi VPS harus bisa mengambil source-nya sendiri.
+# Docker BuildKit yang meng-clone repo lalu build di sana.
+#
+# Karena VPS meng-clone tanpa kredensial, REPONYA HARUS PUBLIC.
+#
+# GANTI __GITHUB_REPO__ dengan URL repo kamu, misalnya:
+#   context: https://github.com/agiandi/ligaakamsi-web.git#main
+services:
+  ligaakamsi-web:
+    build:
+      context: __GITHUB_REPO__
+      dockerfile: Dockerfile
+    container_name: ligaakamsi-web
+    restart: unless-stopped
+    ports:
+      # 3000 dipakai kolibrinektara, 3001 kosong di VPS ini.
+      - "127.0.0.1:3001:80"

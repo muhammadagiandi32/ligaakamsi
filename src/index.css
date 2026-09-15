@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    /* Smooth scroll untuk anchor nav. Framer Motion tetap pakai scroll native
+       supaya useScroll() akurat — jangan pasang smooth-scroll library di atas ini. */
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Hormati preferensi aksesibilitas: matikan smooth scroll kalau user minta
+     reduced motion. Komponen React juga cek useReducedMotion(). */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-asphalt-950 text-chalk font-sans antialiased;
+    /* overflow-x hidden mencegah horizontal scroll dari elemen parallax/marquee
+       yang sengaja meluber keluar viewport. */
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-flare text-asphalt-950;
+  }
+
+  /* Scrollbar gelap supaya konsisten dengan mood aspal */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-asphalt-950;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-asphalt-600 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-flare;
+  }
+}
+
+@layer components {
+  /* ============================================================
+     TEKSTUR ASPAL
+     Dipakai sebagai overlay di section gelap. Fractal noise SVG,
+     inline data-URI supaya tidak butuh file gambar eksternal.
+     GANTI (opsional): kalau nanti punya foto tekstur aspal asli,
+     tinggal timpa background-image di .texture-asphalt.
+     ============================================================ */
+  .texture-asphalt {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+  }
+
+  /* Grid garis tipis — kesan marka / petak lapangan */
+  .texture-grid {
+    background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.045) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  /* Headline display: padat, uppercase, tracking rapat ala poster jalanan */
+  .headline {
+    @apply font-display uppercase leading-[0.86] tracking-tightest;
+  }
+
+  /* Outline text untuk aksen headline */
+  .text-stroke {
+    color: transparent;
+    -webkit-text-stroke: 1.5px theme('colors.chalk');
+  }
+  .text-stroke-flare {
+    color: transparent;
+    -webkit-text-stroke: 1.5px theme('colors.flare.DEFAULT');
+  }
+
+  /* Label kecil monospace di atas tiap section */
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.28em] text-flare;
+  }
+}
