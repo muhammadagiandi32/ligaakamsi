@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion
 import SectionHeading from './ui/SectionHeading';
 import ImagePlaceholder from './ui/ImagePlaceholder';
 import { staggerContainerCustom, scaleIn, VIEWPORT_LOOSE, EASE } from '../lib/animations';
+import { IMAGES } from '../data/images';
 
 /* =============================================================================
    SECTION 5 — GALERI / DOKUMENTASI
@@ -23,7 +24,7 @@ import { staggerContainerCustom, scaleIn, VIEWPORT_LOOSE, EASE } from '../lib/an
 
 const GALLERY = [
   {
-    src: '', // GANTI
+    src: IMAGES.galeri[0],
     label: 'FOTO — tendangan bebas di bawah lampu sorot, penonton rapat di pinggir jalan',
     caption: 'Final Musim 4',
     meta: 'Jl. Sawah Lio',
@@ -31,7 +32,7 @@ const GALLERY = [
     ratio: 'aspect-[4/3] sm:aspect-auto sm:h-full',
   },
   {
-    src: '',
+    src: IMAGES.galeri[1],
     label: 'FOTO — potret close-up pemain muda berkeringat, ekspresi serius',
     caption: 'Wajah Akamsi',
     meta: 'U-15',
@@ -39,7 +40,7 @@ const GALLERY = [
     ratio: 'aspect-[4/5]',
   },
   {
-    src: '',
+    src: IMAGES.galeri[2],
     label: 'FOTO — sepatu bola lusuh dan bola di atas aspal bergaris kapur',
     caption: 'Modal Seadanya',
     meta: 'Detail',
@@ -47,7 +48,7 @@ const GALLERY = [
     ratio: 'aspect-[4/5]',
   },
   {
-    src: '',
+    src: IMAGES.galeri[3],
     label: 'FOTO — penonton menonton dari atas motor dan teras rumah',
     caption: 'Tribun Kampung',
     meta: 'Sabtu malam',
@@ -55,7 +56,7 @@ const GALLERY = [
     ratio: 'aspect-[16/10]',
   },
   {
-    src: '',
+    src: IMAGES.galeri[4],
     label: 'FOTO — selebrasi juara, tim mengangkat piala sederhana',
     caption: 'Juara Kampung',
     meta: 'Musim 4',
@@ -63,7 +64,7 @@ const GALLERY = [
     ratio: 'aspect-[4/5]',
   },
   {
-    src: '',
+    src: IMAGES.galeri[5],
     label: 'FOTO — panitia warga menyiapkan gawang sebelum pertandingan',
     caption: 'Di Balik Layar',
     meta: 'Panitia RT',

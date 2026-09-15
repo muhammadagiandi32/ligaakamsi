@@ -75,7 +75,10 @@ export default function Bergabung() {
       <motion.div
         aria-hidden="true"
         style={{ x: reduce ? undefined : bgTextX }}
-        className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 select-none whitespace-nowrap"
+        // Disembunyikan di mobile: di layar sempit teks raksasa ini jatuh
+        // tepat di belakang judul dan kartu, dan walau opacity-nya 7% hasilnya
+        // terbaca sebagai teks bertumpuk, bukan tekstur.
+        className="pointer-events-none absolute top-1/2 left-0 hidden -translate-y-1/2 select-none whitespace-nowrap sm:block"
       >
         <span className="headline text-stroke text-[22vw] opacity-[0.07]">
           AKAMSI AKAMSI AKAMSI

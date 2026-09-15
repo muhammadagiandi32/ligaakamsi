@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion
 import ImagePlaceholder from './ui/ImagePlaceholder';
 import Reveal from './ui/Reveal';
 import Ticker from './ui/Ticker';
+import { IMAGES } from '../data/images';
 import { staggerContainer, fadeUp, lineMask, clipReveal, VIEWPORT, VIEWPORT_LOOSE } from '../lib/animations';
 
 /* =============================================================================
@@ -121,7 +122,7 @@ export default function TentangKami() {
                 padat dan kabel listrik. Rasio 4:5.
               */}
               <ImagePlaceholder
-                src=""
+                src={IMAGES.tentang}
                 alt="Anak-anak bermain bola di gang Tambora"
                 ratio="aspect-[4/5]"
                 label="FOTO — anak menggiring bola di gang sempit, latar rumah padat Tambora"
@@ -170,7 +171,7 @@ export default function TentangKami() {
             {/* Foto versi mobile (kolom sticky disembunyikan di layar kecil) */}
             <Reveal className="group mt-12 lg:hidden">
               <ImagePlaceholder
-                src=""
+                src={IMAGES.tentang}
                 alt="Anak-anak bermain bola di gang Tambora"
                 ratio="aspect-[4/5]"
                 label="FOTO — anak menggiring bola di gang sempit, latar rumah padat Tambora"

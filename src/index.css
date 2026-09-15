@@ -72,9 +72,16 @@
     background-size: 64px 64px;
   }
 
-  /* Headline display: padat, uppercase, tracking rapat ala poster jalanan */
+  /* Headline display: padat, uppercase, tracking rapat ala poster jalanan.
+     PENTING — leading & tracking dibuat responsif:
+     Di desktop tiap baris judul dipotong manual lewat array, jadi leading 0.86
+     aman (tidak pernah ada baris yang membungkus). Di mobile baris yang sama
+     membungkus sendiri, dan pada leading < 1 baris kedua naik menimpa baris
+     pertama — huruf benar-benar bertumpuk. Tracking -0.045em juga terlalu
+     rapat di layar kecil. Jadi mobile pakai angka yang aman, ketatnya baru
+     dipakai dari breakpoint sm ke atas. */
   .headline {
-    @apply font-display uppercase leading-[0.86] tracking-tightest;
+    @apply font-display uppercase leading-[1.02] tracking-[-0.02em] sm:leading-[0.86] sm:tracking-tightest;
   }
 
   /* Outline text untuk aksen headline */

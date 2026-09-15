@@ -4,6 +4,7 @@ import SectionHeading from './ui/SectionHeading';
 import ImagePlaceholder from './ui/ImagePlaceholder';
 import Reveal from './ui/Reveal';
 import useMediaQuery from '../lib/useMediaQuery';
+import { IMAGES } from '../data/images';
 import { staggerContainer, fadeUp, VIEWPORT } from '../lib/animations';
 
 /* =============================================================================
@@ -33,6 +34,7 @@ const STEPS = [
     title: 'Aspal Disulap',
     desc: 'Warga gotong royong: jalan ditutup pakai kerucut dan bambu, gawang besi dikeluarkan dari gudang RT, garis lapangan digambar pakai kapur. Satu jam, jalan berubah jadi stadion.',
     photo: 'FOTO — warga menutup jalan & menggambar garis lapangan dengan kapur',
+    img: IMAGES.program[0],
   },
   {
     no: '02',
@@ -40,6 +42,7 @@ const STEPS = [
     title: 'Peluit Pertama',
     desc: 'Babak penyisihan dimulai. Format 5 lawan 5, dua babak masing-masing 12 menit. Lampu sorot pinjaman, sound system dari toko sebelah, komentator dari anak RT sendiri.',
     photo: 'FOTO — kick-off malam hari di bawah lampu sorot, penonton mengelilingi lapangan',
+    img: IMAGES.program[1],
   },
   {
     no: '03',
@@ -47,6 +50,7 @@ const STEPS = [
     title: 'Panggungnya Akamsi',
     desc: 'Semifinal dan final. Ini bagian di mana anak yang biasanya cuma main di gang tiba-tiba ditonton ratusan orang — dan direkam, lalu ditonton ribuan lagi di media sosial.',
     photo: 'FOTO — pemain merayakan gol, penonton berdiri dan bersorak',
+    img: IMAGES.program[2],
   },
   {
     no: '04',
@@ -54,13 +58,19 @@ const STEPS = [
     title: 'Jalan Dikembalikan',
     desc: 'Selesai tanding, semua dibereskan. Sampah dipungut, gawang disimpan, kerucut diangkat. Besok pagi jalan ini kembali jadi jalan — sampai akhir pekan berikutnya.',
     photo: 'FOTO — anak-anak membereskan lapangan malam hari, jalan kembali kosong',
+    img: IMAGES.program[3],
   },
 ];
 
-/* ---------- Panel tunggal (dipakai versi desktop maupun mobile) ---------- */
-function StepPanel({ step }) {
+/* ---------- Panel tunggal (dipakai versi desktop maupun mobile) ----------
+   Lebarnya dioper dari luar: versi horizontal butuh lebar tetap dalam vw agar
+   track-nya bisa digeser, versi vertikal di mobile harus ikut lebar container
+   (w-full) supaya tidak menyisakan celah kanan. */
+function StepPanel({ step, widthClass = 'w-[86vw] shrink-0 sm:w-[62vw] lg:w-[46vw]' }) {
   return (
-    <div className="flex h-full w-[86vw] shrink-0 flex-col gap-6 border border-chalk/10 bg-asphalt-900 p-7 sm:w-[62vw] sm:p-10 lg:w-[46vw]">
+    <div
+      className={`flex h-full flex-col gap-6 border border-chalk/10 bg-asphalt-900 p-6 sm:p-10 ${widthClass}`}
+    >
       <div className="flex items-center justify-between">
         <span className="font-display text-[clamp(3rem,7vw,5rem)] leading-none text-flare">
           {step.no}
@@ -72,7 +82,7 @@ function StepPanel({ step }) {
 
       {/* Foto panel. GANTI: isi prop src masing-masing. */}
       <div className="group relative flex-1 overflow-hidden">
-        <ImagePlaceholder src="" alt={step.title} ratio="h-full min-h-[180px] w-full" label={step.photo} />
+        <ImagePlaceholder src={step.img} alt={step.title} ratio="h-full min-h-[180px] w-full" label={step.photo} />
       </div>
 
       <div>
@@ -179,8 +189,10 @@ export default function Program() {
               className="flex flex-col gap-6"
             >
               {STEPS.map((step) => (
-                <motion.div key={step.no} variants={fadeUp} className="h-[520px]">
-                  <StepPanel step={step} />
+                // min-h, bukan h tetap: di layar sempit deskripsi bisa lebih
+                // panjang dan tinggi tetap akan memotong teksnya.
+                <motion.div key={step.no} variants={fadeUp} className="min-h-[30rem]">
+                  <StepPanel step={step} widthClass="w-full" />
                 </motion.div>
               ))}
             </motion.div>

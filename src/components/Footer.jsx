@@ -224,7 +224,9 @@ export default function Footer() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.4 }}
-            className="headline text-center text-[clamp(2.8rem,11.5vw,10rem)] leading-[0.85] text-chalk"
+            // leading-[0.85] hanya dari sm ke atas: di mobile kalimat ini
+            // membungkus jadi 2-3 baris dan leading di bawah 1 bikin tumpuk.
+            className="headline text-center text-[clamp(2.4rem,11.5vw,10rem)] leading-[1.02] text-chalk sm:leading-[0.85]"
           >
             Jalanan Jadi <span className="text-flare">Lapangan</span>
           </motion.h2>

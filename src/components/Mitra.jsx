@@ -5,6 +5,7 @@ import Button from './ui/Button';
 import Reveal from './ui/Reveal';
 import ImagePlaceholder from './ui/ImagePlaceholder';
 import { staggerContainerCustom, fadeUp, VIEWPORT } from '../lib/animations';
+import { IMAGES } from '../data/images';
 
 /* =============================================================================
    SECTION 7 — MITRA & DUKUNGAN
@@ -155,7 +156,7 @@ export default function Mitra() {
                   mengelilingi, dan padatnya permukiman. Rasio 4:5.
                 */}
                 <ImagePlaceholder
-                  src=""
+                  src={IMAGES.mitra}
                   alt="Suasana pertandingan Liga Akamsi dari atas"
                   ratio="aspect-[4/5]"
                   label="FOTO — suasana pertandingan dari sudut tinggi, jalan dikelilingi penonton"

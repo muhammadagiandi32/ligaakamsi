@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion
 import Button from './ui/Button';
 import ImagePlaceholder from './ui/ImagePlaceholder';
 import { EASE, lineMask } from '../lib/animations';
+import { IMAGES } from '../data/images';
 
 /* =============================================================================
    SECTION 1 — HERO
@@ -63,7 +64,11 @@ export default function Hero() {
     <section
       ref={ref}
       id="hero"
-      className="relative flex min-h-[100svh] w-full items-end overflow-hidden bg-asphalt-950 pb-28 pt-28 sm:pb-32"
+      // pb-40 di mobile: bar statistik di bawah posisinya absolute, dan di
+      // layar kecil tingginya jauh lebih besar daripada di desktop (stat-nya
+      // jadi 3 kolom sempit dengan label yang membungkus). Padding ini yang
+      // mencegahnya menimpa tombol CTA.
+      className="relative flex min-h-[100svh] w-full items-end overflow-hidden bg-asphalt-950 pb-40 pt-24 sm:pb-32 sm:pt-28"
     >
       {/* ---------- LAPIS 1: BACKGROUND ---------- */}
       <motion.div style={{ y: p(bgY), scale: p(bgScale) }} className="absolute inset-0 -z-10">
@@ -75,7 +80,7 @@ export default function Hero() {
           Resolusi minimal 2400px lebar, agak digelapkan saat export.
         */}
         <ImagePlaceholder
-          src=""
+          src={IMAGES.hero}
           alt="Pertandingan Liga Akamsi di Jalan Sawah Lio, Tambora"
           ratio="h-full w-full"
           zoomOnHover={false}
@@ -165,8 +170,10 @@ export default function Hero() {
         style={{ y: p(statsY), opacity: p(contentOpacity) }}
         className="pointer-events-none absolute inset-x-0 bottom-0 z-10"
       >
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-chalk/10 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <div className="flex flex-wrap gap-8 sm:gap-14">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-chalk/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-6">
+          {/* Mobile: grid 3 kolom dengan teks kecil, supaya tingginya terkendali.
+              Desktop: flex melebar seperti semula. */}
+          <div className="grid grid-cols-3 gap-3 sm:flex sm:flex-wrap sm:gap-14">
             {HERO_STATS.map((s, i) => (
               <motion.div
                 key={s.label}
@@ -176,10 +183,10 @@ export default function Hero() {
                 // headline selesai "bicara".
                 transition={{ duration: 0.7, ease: EASE, delay: 1.1 + i * 0.12 }}
               >
-                <div className="font-display text-2xl leading-none text-chalk sm:text-3xl">
+                <div className="font-display text-lg leading-none text-chalk sm:text-3xl">
                   {s.value}
                 </div>
-                <div className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-chalk/45">
+                <div className="mt-1 font-mono text-[9px] uppercase leading-snug tracking-[0.1em] text-chalk/45 sm:mt-1.5 sm:text-[10px] sm:tracking-[0.16em]">
                   {s.label}
                 </div>
               </motion.div>
@@ -192,7 +199,9 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.6, duration: 0.8 }}
-            className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-chalk/40"
+            // Disembunyikan di mobile: ruang vertikal di hero HP sudah sempit,
+            // dan isyarat "gulir" tidak diperlukan di layar sentuh.
+            className="hidden items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-chalk/40 sm:flex"
           >
             Gulir terus
             <motion.svg
