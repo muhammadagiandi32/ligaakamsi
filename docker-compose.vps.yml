@@ -1,21 +1,37 @@
-# Compose khusus untuk deploy lewat Hostinger VPS API.
+# INI YANG BENAR-BENAR JALAN DI VPS (project: ligaakamsi)
+# Lokasi di server: /docker/ligaakamsi/docker-compose.yml
 #
-# Bedanya dengan docker-compose.yml biasa: build context-nya menunjuk ke
-# URL git, bukan folder lokal. Hostinger hanya menarik FILE compose ini ke
-# VPS (bukan seluruh repo), jadi VPS harus bisa mengambil source-nya sendiri.
-# Docker BuildKit yang meng-clone repo lalu build di sana.
-#
-# Karena VPS meng-clone tanpa kredensial, REPONYA HARUS PUBLIC.
-#
-# GANTI __GITHUB_REPO__ dengan URL repo kamu, misalnya:
-#   context: https://github.com/agiandi/ligaakamsi-web.git#main
+# Kenapa tidak pakai `build:` seperti docker-compose.yml biasa?
+# Hostinger VPS API TIDAK menjalankan tahap build dari compose — project
+# dibuat tapi container tidak pernah naik. Jadi polanya dibalik:
+# build dilakukan di lokal (npm run build), hasilnya (dist/) di-commit
+# ke repo, lalu VPS cuma clone + sajikan.
 services:
+  # Container sekali jalan: clone repo, salin dist/ dan nginx.conf ke volume.
+  site-fetch:
+    image: alpine/git:latest
+    restart: "no"
+    volumes:
+      - site:/site
+      - conf:/conf
+    entrypoint: ["sh", "-c", "set -e; rm -rf /tmp/repo; git clone --depth 1 --branch main https://github.com/muhammadagiandi32/ligaakamsi.git /tmp/repo; rm -rf /site/*; rm -rf /conf/*; cp -r /tmp/repo/dist/. /site/; cp /tmp/repo/deploy/nginx.conf /conf/default.conf; echo FETCH_OK"]
+
+  # nginx penyaji. Bind ke 127.0.0.1 saja — nginx HOST yang jadi
+  # reverse proxy + terminasi SSL untuk ligaakamsi.com.
   ligaakamsi-web:
-    build:
-      context: __GITHUB_REPO__
-      dockerfile: Dockerfile
+    image: nginx:1.27-alpine
     container_name: ligaakamsi-web
     restart: unless-stopped
+    depends_on:
+      site-fetch:
+        condition: service_completed_successfully
+    volumes:
+      - site:/usr/share/nginx/html:ro
+      - conf:/etc/nginx/conf.d:ro
     ports:
-      # 3000 dipakai kolibrinektara, 3001 kosong di VPS ini.
+      # 3000 dipakai kolibrinektara, 3001 kosong.
       - "127.0.0.1:3001:80"
+
+volumes:
+  site:
+  conf:
