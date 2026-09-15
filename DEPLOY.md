@@ -9,10 +9,12 @@
 | Docker project | `ligaakamsi` di `/docker/ligaakamsi/docker-compose.yml` — **jalan** |
 | Container | `ligaakamsi-web` (nginx:1.27-alpine) di `127.0.0.1:3001` |
 | DNS | A `@` dan CNAME `www` → `72.62.125.68` — **sudah pindah** |
-| vhost nginx host | **BELUM** — ini penyebab 502 |
-| SSL | **BELUM** — jalankan setelah vhost |
+| vhost nginx host | **aktif** — `/etc/nginx/sites-enabled/ligaakamsi.com` |
+| SSL | **aktif** — Let's Encrypt, berlaku s/d 14 Des 2026, auto-renew certbot |
 
-## Sisa dua langkah (butuh SSH ke VPS)
+Situs live di **https://ligaakamsi.com** (HTTP otomatis redirect ke HTTPS).
+
+## Riwayat: dua langkah yang dulu dikerjakan manual
 
 ```bash
 ssh root@72.62.125.68
